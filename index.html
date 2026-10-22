@@ -768,9 +768,10 @@
     <div class="cover" id="cover" role="dialog" aria-label="Open our letter">
         <div class="cover-inner">
             <span class="cover-heart" aria-hidden="true">♡</span>
-            <h2>Happy 23rd Monthsary</h2>
+            <h2>Happy 18th birthday
+            </h2>
             <p>I made something little for you. Turn your sound on and tap below.</p>
-            <button class="cover-button" id="openCover" type="button">Open our letter ♡</button>
+            <button class="cover-button" id="openCover" type="button">Open my letter ♡</button>
         </div>
     </div>
     <span class="floating-heart one" aria-hidden="true">♡</span>
@@ -780,7 +781,7 @@
         <header class="topbar">
             <div class="brand"><span class="brand-heart" aria-hidden="true">♡</span><span id="brandText">our little long
                     distance love story</span></div>
-            <button class="customize-button" id="openEditor" type="button">&nbsp; Lyka ♡ Lorence</button>
+            <button class="customize-button" id="openMusicSettings" type="button">&nbsp; 18 na birthday muna </button>
         </header>
 
         <main>
@@ -886,14 +887,37 @@
         </form>
     </dialog>
 
+    <dialog id="musicDialog" aria-labelledby="musicDialogTitle">
+        <form class="editor" id="musicForm">
+            <div class="editor-header">
+                <div>
+                    <h2 id="musicDialogTitle">Choose your song</h2>
+                    <p>Pick a song from your device to use as the background music.</p>
+                </div>
+                <button class="close-button" id="closeMusicDialog" type="button" aria-label="Close music settings">×</button>
+            </div>
+            <div class="field full">
+                <label for="musicFile">Background music (MP3, M4A, OGG, or WAV)</label>
+                <input id="musicFile" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav">
+                <p class="photo-help">Your song is saved in this browser on this device.</p>
+            </div>
+            <div class="editor-actions">
+                <button class="save-button" type="submit">Save background music</button>
+                <button class="quiet-button" id="restoreDefaultMusic" type="button">Use the original song</button>
+                <button class="quiet-button" id="cancelMusicDialog" type="button">Cancel</button>
+                <p class="status" id="musicStatus" role="status" aria-live="polite"></p>
+            </div>
+        </form>
+    </dialog>
+
     <script>
         // Personalize the default letters here, or use "Make it yours" on the page.
         const defaultContent = {
-            title: "23 months of choosing you",
-            subtitle: "A tiny scrapbook for my favorite person, filled with the moments and words I never want you to forget.",
+            title: "Happy 18th Birthday",
+            subtitle: "A tiny scrapbook for my favorite person.",
             name: "my favorite person",
-            date: "A little celebration of our 23rd monthsarry",
-            signoff: "I love you so much bing, always",
+            date: "A little celebration for your 18th birthday",
+            signoff: "I love you so much, always",
             theme: "rose",
             // Add your track at this path, or change this to its filename in media/.
             musicUrl: "media/our-song.mp3",
@@ -901,30 +925,28 @@
             cards: [
                 {
                     title: "My first yet the only gift you receive directly form my craft",
-                    text: "This is one of my favorite moments as this was the only time i have manage to give you present directly from my crafts. It was not the best and the most expensive but this was the most memorable, i made you cry for this hehehe.\n\nThank you for truly appreciating and cherishing it i will never forget how you cry for those little things i had made.",
+                    text: " for this hehehe.\n\nThank you le things i had made.",
                     caption: "One of my favorite little moments",
                     image: "media/slide1.jpg",
                     alt: "A couple sharing a warm, happy moment"
                 },
                 {
                     title: "The glimpse of tomorrow",
-                    text: "This is the most realistic image of us together, and it has a place in my heart. Despite being a thousand miles apart, it made us looks like we were together. It is a glimpse of the future that strengthens our faith and love towards each other.\n\nI beleived that the time will come were we will be able to remake this image for real, it give us hope to dream, upon the future were we spend time being together .",
+                    text: "ds each other.\n\nI beleivedme being together .",
                     caption: "Anywhere is lovely with you",
                     image: "media/slide2.jpg",
                     alt: "A couple holding hands together"
                 },
                 {
                     title: "Here's to every next chapter",
-                    text: "I know that our relationship is far from perfect, we have our ups and downs, fights after fights, and a lot of misunderstandings. But I am so blessed to have you by my side, as you never give up on me. Instead, you always choose to resolve our problems and understand our situation. I know that you loved me, but my love for you is deeper, you are my first girl, and i hope that you'll be the last. I really want to bring back the smile and the joy you have in this image that was captured from the very first time that i gave you flowers, the flowers might be fake, but the joy in your eyes is real. I really want to have this version of you from this image once again. But i also understand that all that we have survived as a couple is part of maturing, and those chapters lead us to how mature we are now when dealing with problems. I really appreciate your love, and that will be irreplaceable.\n\nHappy monthsary, bing. This is my favorite story from all books that i have, and I can't wait to write the next pages of our book .",
-                    caption: "To all the memories still to come",
+                    text: "hte,love irreplaceable.\n\nHappy book .",
+                    caption: "To ",
                     image: "media/slide3.jpg",
                     alt: "A family enjoying a sunny outdoor moment"
                 }
             ]
         };
 
-        // Set to true to show the page editor button again.
-        const editorEnabled = false;
         const storageKey = "monthsary-page-v1";
         const themes = {
             rose: { rose: "#cf7181", roseDark: "#a94f64", blush: "#f8e5e4", paper: "#fffaf5", ink: "#593c40", muted: "#98777a", line: "#eedbd6" },
@@ -955,8 +977,8 @@
                 return {
                     ...structuredClone(defaultContent),
                     ...parsed,
-                    musicUrl: defaultContent.musicUrl || parsed.musicUrl || "",
-                    musicTitle: defaultContent.musicUrl ? defaultContent.musicTitle : (parsed.musicTitle || ""),
+                    musicUrl: parsed.musicTitle ? (parsed.musicUrl || "") : (defaultContent.musicUrl || parsed.musicUrl || ""),
+                    musicTitle: parsed.musicTitle || defaultContent.musicTitle || "",
                     cards: parsed.cards.map((card, index) => ({ ...defaultContent.cards[index], ...card }))
                 };
             } catch (error) {
@@ -1195,15 +1217,61 @@
             touchStartX = null;
         });
 
-        $("openEditor").disabled = !editorEnabled;
-        if (editorEnabled) {
-            $("openEditor").addEventListener("click", () => {
-                populateEditor();
-                $("editorDialog").showModal();
-            });
-        } else {
-            $("openEditor").title = "Page editing is currently disabled.";
-        }
+        $("openMusicSettings").addEventListener("click", () => {
+            $("musicFile").value = "";
+            $("musicStatus").textContent = "";
+            $("musicDialog").showModal();
+        });
+        $("closeMusicDialog").addEventListener("click", () => $("musicDialog").close());
+        $("cancelMusicDialog").addEventListener("click", () => $("musicDialog").close());
+        $("musicDialog").addEventListener("click", (event) => {
+            if (event.target === $("musicDialog")) $("musicDialog").close();
+        });
+        $("musicForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const file = $("musicFile").files[0];
+            if (!file) {
+                $("musicStatus").textContent = "Choose an audio file first.";
+                return;
+            }
+            if (!file.type.startsWith("audio/") && !/\.(mp3|m4a|ogg|wav)$/i.test(file.name)) {
+                $("musicStatus").textContent = "Please choose an audio file.";
+                $("musicFile").value = "";
+                return;
+            }
+            $("musicStatus").textContent = "Saving your song…";
+            try {
+                await writeMusic(file);
+                const updated = { ...content, musicUrl: "", musicTitle: file.name };
+                localStorage.setItem(storageKey, JSON.stringify(updated));
+                content = updated;
+                renderPage();
+                $("musicStatus").textContent = "Your background music is saved on this device ♡";
+                window.setTimeout(() => $("musicDialog").close(), 650);
+            } catch (error) {
+                console.error("Could not save the background music:", error);
+                $("musicStatus").textContent = `Couldn't save your song: ${error.message}`;
+            }
+        });
+        $("restoreDefaultMusic").addEventListener("click", async () => {
+            $("musicStatus").textContent = "Restoring the original song…";
+            try {
+                await deleteMusic();
+                const updated = {
+                    ...content,
+                    musicUrl: defaultContent.musicUrl,
+                    musicTitle: defaultContent.musicTitle
+                };
+                localStorage.setItem(storageKey, JSON.stringify(updated));
+                content = updated;
+                renderPage();
+                $("musicStatus").textContent = "The original song is restored.";
+            } catch (error) {
+                console.error("Could not restore the original background music:", error);
+                $("musicStatus").textContent = `Couldn't restore the original song: ${error.message}`;
+            }
+        });
+
         $("closeEditor").addEventListener("click", closeEditor);
         $("cancelEditor").addEventListener("click", closeEditor);
         $("editorDialog").addEventListener("click", (event) => {
