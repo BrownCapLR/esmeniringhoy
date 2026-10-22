@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff8f2">
+    <meta name="description" content="A little love-letter scrapbook made just for us.">
+    <title>23 Months of Us ♡</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --paper: #fffaf5;
+            --ink: #593c40;
+            --muted: #98777a;
+            --rose: #cf7181;
+            --rose-dark: #a94f64;
+            --blush: #f8e5e4;
+            --line: #eedbd6;
+            --shadow: 0 24px 70px rgb(109 62 67 / 12%);
+            font-family: "Segoe UI", "Avenir Next", Avenir, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--ink);
+            background:
+                radial-gradient(ellipse at 10% 16%, rgb(255 225 222 / 67%), transparent 30rem),
+                radial-gradient(ellipse at 92% 78%, rgb(255 235 208 / 58%), transparent 28rem),
+                var(--paper);
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .page-shell {
+            width: min(1120px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 27px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: Georgia, serif;
+            font-size: 18px;
+        }
+
+        .brand-heart {
+            color: var(--rose);
+            font-size: 23px;
+        }
+
+        .customize-button,
+        .quiet-button,
+        .save-button {
+            min-height: 44px;
+            padding: 0 19px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgb(255 255 255 / 72%);
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s, background .2s;
+        }
+
+        .customize-button:hover,
+        .quiet-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgb(109 62 67 / 10%);
+        }
+
+        .customize-button {
+            color: var(--rose-dark);
+        }
+
+        .hero {
+            padding: 35px 0 28px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            margin: 0 0 14px;
+            color: var(--rose-dark);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(42px, 7vw, 76px);
+            font-weight: 400;
+            letter-spacing: -.055em;
+            line-height: 1.04;
+        }
+
+        h1 span {
+            color: var(--rose);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            max-width: 560px;
+            margin: 17px auto 0;
+            color: var(--muted);
+            font-family: Georgia, serif;
+            font-size: clamp(16px, 2vw, 19px);
+            line-height: 1.6;
+        }
+
+        .carousel-wrap {
+            position: relative;
+            width: min(900px, 100%);
+            margin: 30px auto 0;
+        }
+
+        .letter-card {
+            display: grid;
+            grid-template-columns: .92fr 1.08fr;
+            min-height: 438px;
+            overflow: hidden;
+            border: 1px solid rgb(238 219 214 / 85%);
+            border-radius: 12px;
+            background: #fffdfb;
+            box-shadow: var(--shadow);
+            animation: card-in .38s ease both;
+        }
+
+        @keyframes card-in {
+            from {
+                opacity: .4;
+                transform: translateY(9px) scale(.99);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .photo-frame {
+            position: relative;
+            min-height: 360px;
+            padding: 16px;
+            background: var(--blush);
+        }
+
+        .photo-frame::before {
+            position: absolute;
+            z-index: 1;
+            top: 7px;
+            left: 50%;
+            width: 76px;
+            height: 19px;
+            content: "";
+            transform: translateX(-50%) rotate(-3deg);
+            background: rgb(255 252 230 / 82%);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            min-height: 360px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .photo-caption {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+            left: 24px;
+            padding: 11px 13px;
+            border-radius: 5px;
+            color: #fff;
+            background: linear-gradient(transparent, rgb(42 25 28 / 65%));
+            font-family: Georgia, serif;
+            font-size: 15px;
+        }
+
+        .letter-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(28px, 5vw, 58px);
+        }
+
+        .card-count {
+            margin-bottom: 18px;
+            color: var(--rose);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .letter-content h2 {
+            margin: 0 0 20px;
+            font-family: Georgia, serif;
+            font-size: clamp(28px, 4vw, 39px);
+            font-weight: 400;
+            letter-spacing: -.035em;
+            line-height: 1.13;
+        }
+
+        .letter-text {
+            margin: 0;
+            color: #795d60;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            line-height: 1.85;
+            white-space: pre-line;
+        }
+
+        .signature {
+            margin-top: 24px;
+            color: var(--rose-dark);
+            font-family: Georgia, serif;
+            font-size: 19px;
+            font-style: italic;
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            padding: 24px 0 0;
+        }
+
+        .arrow-button {
+            display: grid;
+            width: 44px;
+            height: 44px;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: #fffdfb;
+            cursor: pointer;
+            font-size: 21px;
+            transition: transform .2s, background .2s;
+        }
+
+        .arrow-button:hover {
+            transform: scale(1.06);
+            background: var(--blush);
+        }
+
+        .dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            border: 0;
+            border-radius: 999px;
+            background: #e5ceca;
+            cursor: pointer;
+            transition: width .2s, background .2s;
+        }
+
+        .dot[aria-current="true"] {
+            width: 24px;
+            background: var(--rose);
+        }
+
+        .counter {
+            min-width: 43px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .hint {
+            margin: 15px 0 0;
+            color: #a18485;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .music-player {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 13px;
+            width: fit-content;
+            max-width: 100%;
+            margin: 30px auto 0;
+            padding: 10px 17px 10px 10px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgb(255 255 255 / 78%);
+            box-shadow: 0 7px 22px rgb(109 62 67 / 7%);
+        }
+
+        .music-toggle {
+            display: grid;
+            flex: none;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border: 0;
+            border-radius: 50%;
+            color: #fff;
+            background: var(--rose);
+            cursor: pointer;
+            transition: transform .2s, background .2s;
+        }
+
+        .music-toggle:hover:not(:disabled) {
+            transform: scale(1.06);
+            background: var(--rose-dark);
+        }
+
+        .music-toggle:disabled {
+            cursor: not-allowed;
+            opacity: .55;
+        }
+
+        .music-info {
+            min-width: 0;
+            text-align: left;
+        }
+
+        .music-label {
+            display: block;
+            color: var(--rose-dark);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .music-title {
+            display: block;
+            max-width: min(54vw, 280px);
+            overflow: hidden;
+            color: var(--muted);
+            font-family: Georgia, serif;
+            font-size: 13px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .footer {
+            padding: 42px 0 30px;
+            color: var(--muted);
+            font-family: Georgia, serif;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .footer span {
+            color: var(--rose);
+        }
+
+        .floating-heart {
+            position: fixed;
+            z-index: -1;
+            color: rgb(207 113 129 / 15%);
+            font-size: 30px;
+            animation: float 7s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .floating-heart.one {
+            top: 24%;
+            left: 5%;
+        }
+
+        .floating-heart.two {
+            top: 58%;
+            right: 6%;
+            font-size: 22px;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-13px) rotate(9deg);
+            }
+        }
+
+        dialog {
+            width: min(620px, calc(100% - 28px));
+            max-height: min(90vh, 900px);
+            padding: 0;
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            color: var(--ink);
+            background: #fffdfb;
+            box-shadow: 0 25px 90px rgb(68 34 41 / 27%);
+        }
+
+        dialog::backdrop {
+            background: rgb(63 37 42 / 40%);
+            backdrop-filter: blur(4px);
+        }
+
+        .editor {
+            padding: clamp(22px, 5vw, 36px);
+        }
+
+        .editor-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 23px;
+        }
+
+        .editor-header h2 {
+            margin: 0;
+            font-family: Georgia, serif;
+            font-size: 29px;
+            font-weight: 400;
+        }
+
+        .editor-header p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .close-button {
+            flex: none;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            font-size: 19px;
+        }
+
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            color: #795d60;
+            font-size: 12px;
+            font-weight: 650;
+        }
+
+        .field input,
+        .field textarea,
+        .field select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            outline: none;
+            color: var(--ink);
+            background: #fff;
+        }
+
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 3px rgb(207 113 129 / 12%);
+        }
+
+        .field textarea {
+            min-height: 93px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .section-heading {
+            grid-column: 1 / -1;
+            margin: 7px 0 -3px;
+            padding-top: 17px;
+            border-top: 1px solid var(--line);
+            font-family: Georgia, serif;
+            font-size: 17px;
+        }
+
+        .photo-help {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .editor-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 23px;
+        }
+
+        .save-button {
+            border-color: var(--rose);
+            color: white;
+            background: var(--rose);
+        }
+
+        .save-button:hover {
+            background: var(--rose-dark);
+        }
+
+        .reset-button {
+            margin-left: auto;
+            padding: 8px;
+            border: 0;
+            color: #9a6d72;
+            background: transparent;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .status {
+            width: 100%;
+            min-height: 17px;
+            margin: 0;
+            color: var(--rose-dark);
+            font-size: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .page-shell {
+                width: min(100% - 28px, 500px);
+            }
+
+            .topbar {
+                padding: 19px 0;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .customize-button {
+                min-height: 40px;
+                padding: 0 14px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 30px 0 18px;
+            }
+
+            .carousel-wrap {
+                margin-top: 17px;
+            }
+
+            .letter-card {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-frame {
+                min-height: 270px;
+                max-height: 330px;
+                padding: 13px;
+            }
+
+            .photo-frame img {
+                min-height: 244px;
+                max-height: 304px;
+            }
+
+            .letter-content {
+                min-height: 295px;
+                padding: 27px 25px 31px;
+            }
+
+            .card-count {
+                margin-bottom: 12px;
+            }
+
+            .letter-content h2 {
+                margin-bottom: 13px;
+            }
+
+            .letter-text {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .signature {
+                margin-top: 17px;
+            }
+
+            .carousel-controls {
+                gap: 15px;
+                padding-top: 18px;
+            }
+
+            .hint {
+                margin-top: 12px;
+            }
+
+            .music-player {
+                margin-top: 22px;
+            }
+
+            .footer {
+                padding: 32px 0 23px;
+            }
+
+            .floating-heart.one {
+                left: 2%;
+            }
+
+            .floating-heart.two {
+                right: 2%;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full,
+            .section-heading {
+                grid-column: auto;
+            }
+
+            .reset-button {
+                margin-left: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* ---- Tap-to-open cover ---- */
+        .cover {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgb(255 225 222 / 80%), transparent 30rem),
+                radial-gradient(ellipse at 85% 80%, rgb(255 235 208 / 70%), transparent 28rem),
+                var(--paper);
+            transition: opacity .7s ease, visibility .7s;
+        }
+
+        .cover.is-open {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .cover-inner {
+            max-width: 420px;
+        }
+
+        .cover-heart {
+            display: block;
+            margin-bottom: 18px;
+            color: var(--rose);
+            font-size: 56px;
+            animation: beat 1.6s ease-in-out infinite;
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .cover h2 {
+            margin: 0 0 10px;
+            font-family: Georgia, serif;
+            font-size: clamp(28px, 6vw, 40px);
+            font-weight: 400;
+            letter-spacing: -.03em;
+        }
+
+        .cover p {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-family: Georgia, serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .cover-button {
+            min-height: 50px;
+            padding: 0 30px;
+            border: 0;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--rose);
+            box-shadow: 0 10px 28px rgb(207 113 129 / 35%);
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform .2s, background .2s;
+        }
+
+        .cover-button:hover {
+            transform: translateY(-2px);
+            background: var(--rose-dark);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cover" id="cover" role="dialog" aria-label="Open our letter">
+        <div class="cover-inner">
+            <span class="cover-heart" aria-hidden="true">♡</span>
+            <h2>Happy 23rd Monthsary</h2>
+            <p>I made something little for you. Turn your sound on and tap below.</p>
+            <button class="cover-button" id="openCover" type="button">Open our letter ♡</button>
+        </div>
+    </div>
+    <span class="floating-heart one" aria-hidden="true">♡</span>
+    <span class="floating-heart two" aria-hidden="true">♡</span>
+
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand"><span class="brand-heart" aria-hidden="true">♡</span><span id="brandText">our little long
+                    distance love story</span></div>
+            <button class="customize-button" id="openEditor" type="button">&nbsp; Lyka ♡ Lorence</button>
+        </header>
+
+        <main>
+            <section class="hero" aria-labelledby="pageTitle">
+                <p class="eyebrow" id="dateLine">A little celebration of our 23rd monthsary</p>
+                <h1 id="pageTitle">23 months of <span>choosing you</span></h1>
+                <p class="hero-subtitle" id="pageSubtitle">A tiny scrapbook for my favorite person, filled with the
+                    moments and words I never want you to forget.</p>
+            </section>
+
+            <section class="carousel-wrap" aria-label="Our love letters">
+                <article class="letter-card" id="letterCard" aria-live="polite">
+                    <div class="photo-frame">
+                        <img id="cardImage" src="" alt="">
+                        <div class="photo-caption" id="imageCaption"></div>
+                    </div>
+                    <div class="letter-content">
+                        <div class="card-count" id="cardCount"></div>
+                        <h2 id="cardTitle"></h2>
+                        <p class="letter-text" id="cardText"></p>
+                        <div class="signature" id="signature"></div>
+                    </div>
+                </article>
+                <nav class="carousel-controls" aria-label="Letter navigation">
+                    <button class="arrow-button" id="previous" type="button" aria-label="Previous letter">‹</button>
+                    <div class="dots" id="dots" aria-label="Choose a letter"></div>
+                    <span class="counter" id="counter" aria-live="polite"></span>
+                    <button class="arrow-button" id="next" type="button" aria-label="Next letter">›</button>
+                </nav>
+                <p class="hint">A little reminder: you can swipe or use the arrows to turn the page ♡</p>
+            </section>
+            <section class="music-player" aria-label="Background music player">
+                <button class="music-toggle" id="musicToggle" type="button" aria-label="Play background music"
+                    disabled>▶</button>
+                <div class="music-info">
+                    <span class="music-label">A song for us</span>
+                    <span class="music-title" id="musicTitle">Our song</span>
+                </div>
+                <audio id="backgroundMusic" autoplay loop preload="auto"></audio>
+            </section>
+        </main>
+
+        <footer class="footer">made with <span>♥</span> for <span id="footerName">my favorite person</span></footer>
+    </div>
+
+    <dialog id="editorDialog" aria-labelledby="editorTitle">
+        <form class="editor" id="editorForm">
+            <div class="editor-header">
+                <div>
+                    <h2 id="editorTitle">Make this page yours</h2>
+                    <p>Your changes are saved in this browser. Add a photo from your device, then save.</p>
+                </div>
+                <button class="close-button" id="closeEditor" type="button" aria-label="Close customization">×</button>
+            </div>
+            <div class="editor-grid">
+                <div class="field full"><label for="editTitle">Main title</label><input id="editTitle" maxlength="90"
+                        required></div>
+                <div class="field full"><label for="editSubtitle">Little note under the title</label><textarea
+                        id="editSubtitle" maxlength="280"></textarea></div>
+                <div class="field"><label for="editName">Your person's name</label><input id="editName" maxlength="50">
+                </div>
+                <div class="field"><label for="editDate">Occasion / date line</label><input id="editDate"
+                        maxlength="80"></div>
+                <div class="field"><label for="editSignoff">Letter sign-off</label><input id="editSignoff"
+                        maxlength="60"></div>
+                <div class="field"><label for="editTheme">Color mood</label>
+                    <select id="editTheme">
+                        <option value="rose">Rose &amp; cream</option>
+                        <option value="peach">Peach &amp; honey</option>
+                        <option value="lilac">Lilac &amp; lavender</option>
+                        <option value="berry">Berry &amp; blush</option>
+                    </select>
+                </div>
+                <h3 class="section-heading">Letter <span id="editingCardNumber">1</span> of <span
+                        id="totalCards">3</span></h3>
+                <div class="field full"><label for="editCardTitle">Letter heading</label><input id="editCardTitle"
+                        maxlength="70" required></div>
+                <div class="field full"><label for="editCardText">Letter text</label><textarea id="editCardText"
+                        maxlength="1400"></textarea></div>
+                <div class="field full"><label for="editCaption">Photo caption</label><input id="editCaption"
+                        maxlength="90"></div>
+                <div class="field full"><label for="editPhoto">Choose a photo for this letter</label><input
+                        id="editPhoto" type="file" accept="image/*">
+                    <p class="photo-help">Your chosen photo stays on this device in this browser. For the best result,
+                        use a compressed JPG or PNG.</p>
+                </div>
+                <h3 class="section-heading">Background music</h3>
+                <div class="field full"><label for="editMusic">Choose a song (MP3, M4A, OGG, or WAV)</label><input
+                        id="editMusic" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav">
+                    <p class="photo-help">Your chosen song is saved in this browser on this device. To include a song
+                        for everyone on your published site, add it to the site's media folder and set musicUrl in
+                        defaultContent below to its path, such as media/song.mp3.</p>
+                </div>
+                <div class="field full"><button class="quiet-button" id="removeMusic" type="button">Remove saved
+                        background music</button></div>
+            </div>
+            <div class="editor-actions">
+                <button class="save-button" type="submit">Save my changes</button>
+                <button class="quiet-button" id="cancelEditor" type="button">Cancel</button>
+                <button class="reset-button" id="resetPage" type="button">Restore the original page</button>
+                <p class="status" id="editorStatus" role="status" aria-live="polite"></p>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        // Personalize the default letters here, or use "Make it yours" on the page.
+        const defaultContent = {
+            title: "23 months of choosing you",
+            subtitle: "A tiny scrapbook for my favorite person, filled with the moments and words I never want you to forget.",
+            name: "my favorite person",
+            date: "A little celebration of our 23rd monthsarry",
+            signoff: "I love you so much bing, always",
+            theme: "rose",
+            // Add your track at this path, or change this to its filename in media/.
+            musicUrl: "media/our-song.mp3",
+            musicTitle: "Our song",
+            cards: [
+                {
+                    title: "My first yet the only gift you receive directly form my craft",
+                    text: "This is one of my favorite moments as this was the only time i have manage to give you present directly from my crafts. It was not the best and the most expensive but this was the most memorable, i made you cry for this hehehe.\n\nThank you for truly appreciating and cherishing it i will never forget how you cry for those little things i had made.",
+                    caption: "One of my favorite little moments",
+                    image: "media/slide1.jpg",
+                    alt: "A couple sharing a warm, happy moment"
+                },
+                {
+                    title: "The glimpse of tomorrow",
+                    text: "This is the most realistic image of us together, and it has a place in my heart. Despite being a thousand miles apart, it made us looks like we were together. It is a glimpse of the future that strengthens our faith and love towards each other.\n\nI beleived that the time will come were we will be able to remake this image for real, it give us hope to dream, upon the future were we spend time being together .",
+                    caption: "Anywhere is lovely with you",
+                    image: "media/slide2.jpg",
+                    alt: "A couple holding hands together"
+                },
+                {
+                    title: "Here's to every next chapter",
+                    text: "I know that our relationship is far from perfect, we have our ups and downs, fights after fights, and a lot of misunderstandings. But I am so blessed to have you by my side, as you never give up on me. Instead, you always choose to resolve our problems and understand our situation. I know that you loved me, but my love for you is deeper, you are my first girl, and i hope that you'll be the last. I really want to bring back the smile and the joy you have in this image that was captured from the very first time that i gave you flowers, the flowers might be fake, but the joy in your eyes is real. I really want to have this version of you from this image once again. But i also understand that all that we have survived as a couple is part of maturing, and those chapters lead us to how mature we are now when dealing with problems. I really appreciate your love, and that will be irreplaceable.\n\nHappy monthsary, bing. This is my favorite story from all books that i have, and I can't wait to write the next pages of our book .",
+                    caption: "To all the memories still to come",
+                    image: "media/slide3.jpg",
+                    alt: "A family enjoying a sunny outdoor moment"
+                }
+            ]
+        };
+
+        // Set to true to show the page editor button again.
+        const editorEnabled = false;
+        const storageKey = "monthsary-page-v1";
+        const themes = {
+            rose: { rose: "#cf7181", roseDark: "#a94f64", blush: "#f8e5e4", paper: "#fffaf5", ink: "#593c40", muted: "#98777a", line: "#eedbd6" },
+            peach: { rose: "#d78768", roseDark: "#a95f48", blush: "#fae8d9", paper: "#fffaf3", ink: "#59423a", muted: "#967a6d", line: "#efddcd" },
+            lilac: { rose: "#9b83be", roseDark: "#735d98", blush: "#eee8f6", paper: "#fcfaff", ink: "#493d58", muted: "#857896", line: "#e5dced" },
+            berry: { rose: "#b85776", roseDark: "#914059", blush: "#f5e1e9", paper: "#fff8fa", ink: "#503741", muted: "#90727c", line: "#ecd8e0" }
+        };
+
+        let content = loadContent();
+        let activeCard = 0;
+        let pendingPhoto = null;
+        const photoDatabase = "monthsary-photos-v1";
+        const photoStore = "photos";
+        const musicStore = "music";
+        const $ = (id) => document.getElementById(id);
+        let pendingMusic = null;
+        let removeSavedMusic = false;
+        let musicObjectUrl = null;
+
+        function loadContent() {
+            try {
+                const saved = localStorage.getItem(storageKey);
+                if (!saved) return structuredClone(defaultContent);
+                const parsed = JSON.parse(saved);
+                if (!parsed || !Array.isArray(parsed.cards) || parsed.cards.length !== defaultContent.cards.length) {
+                    throw new Error("Saved page data is not in the expected format.");
+                }
+                return {
+                    ...structuredClone(defaultContent),
+                    ...parsed,
+                    musicUrl: defaultContent.musicUrl || parsed.musicUrl || "",
+                    musicTitle: defaultContent.musicUrl ? defaultContent.musicTitle : (parsed.musicTitle || ""),
+                    cards: parsed.cards.map((card, index) => ({ ...defaultContent.cards[index], ...card }))
+                };
+            } catch (error) {
+                console.error("Could not load your saved monthsary page:", error);
+                return structuredClone(defaultContent);
+            }
+        }
+
+        function openPhotoDatabase() {
+            return new Promise((resolve, reject) => {
+                if (!("indexedDB" in window)) {
+                    reject(new Error("Photo storage is not available in this browser."));
+                    return;
+                }
+                const request = indexedDB.open(photoDatabase, 2);
+                request.onupgradeneeded = () => {
+                    const db = request.result;
+                    if (!db.objectStoreNames.contains(photoStore)) db.createObjectStore(photoStore);
+                    if (!db.objectStoreNames.contains(musicStore)) db.createObjectStore(musicStore);
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error("Could not open photo storage."));
+            });
+        }
+
+        async function readPhoto(index) {
+            const db = await openPhotoDatabase();
+            return new Promise((resolve, reject) => {
+                const request = db.transaction(photoStore, "readonly").objectStore(photoStore).get(index);
+                request.onsuccess = () => { db.close(); resolve(request.result || null); };
+                request.onerror = () => { db.close(); reject(request.error || new Error("Could not load the saved photo.")); };
+            });
+        }
+
+        async function writePhoto(index, file) {
+            const db = await openPhotoDatabase();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(photoStore, "readwrite");
+                transaction.objectStore(photoStore).put(file, index);
+                transaction.oncomplete = () => { db.close(); resolve(); };
+                transaction.onerror = () => { db.close(); reject(transaction.error || new Error("Could not save the photo.")); };
+                transaction.onabort = () => { db.close(); reject(transaction.error || new Error("Photo saving was interrupted.")); };
+            });
+        }
+
+        async function clearPhotos() {
+            const db = await openPhotoDatabase();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(photoStore, "readwrite");
+                transaction.objectStore(photoStore).clear();
+                transaction.oncomplete = () => { db.close(); resolve(); };
+                transaction.onerror = () => { db.close(); reject(transaction.error || new Error("Could not clear saved photos.")); };
+            });
+        }
+
+        async function readMusic() {
+            const db = await openPhotoDatabase();
+            return new Promise((resolve, reject) => {
+                const request = db.transaction(musicStore, "readonly").objectStore(musicStore).get("background");
+                request.onsuccess = () => { db.close(); resolve(request.result || null); };
+                request.onerror = () => { db.close(); reject(request.error || new Error("Could not load the saved song.")); };
+            });
+        }
+
+        async function writeMusic(file) {
+            const db = await openPhotoDatabase();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(musicStore, "readwrite");
+                transaction.objectStore(musicStore).put(file, "background");
+                transaction.oncomplete = () => { db.close(); resolve(); };
+                transaction.onerror = () => { db.close(); reject(transaction.error || new Error("Could not save the song.")); };
+                transaction.onabort = () => { db.close(); reject(transaction.error || new Error("Song saving was interrupted.")); };
+            });
+        }
+
+        async function deleteMusic() {
+            const db = await openPhotoDatabase();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(musicStore, "readwrite");
+                transaction.objectStore(musicStore).delete("background");
+                transaction.oncomplete = () => { db.close(); resolve(); };
+                transaction.onerror = () => { db.close(); reject(transaction.error || new Error("Could not remove the saved song.")); };
+            });
+        }
+
+        async function loadBackgroundMusic() {
+            const audio = $("backgroundMusic");
+            audio.pause();
+            $("musicToggle").disabled = true;
+            if (musicObjectUrl) {
+                URL.revokeObjectURL(musicObjectUrl);
+                musicObjectUrl = null;
+            }
+            try {
+                if (content.musicUrl) {
+                    audio.src = content.musicUrl;
+                    $("musicTitle").textContent = content.musicTitle || content.musicUrl.split("/").pop();
+                } else {
+                    const savedMusic = await readMusic();
+                    if (!savedMusic) {
+                        audio.removeAttribute("src");
+                        audio.load();
+                        $("musicTitle").textContent = "Add a song in “Make it yours”";
+                        return;
+                    }
+                    musicObjectUrl = URL.createObjectURL(savedMusic);
+                    audio.src = musicObjectUrl;
+                    $("musicTitle").textContent = content.musicTitle || savedMusic.name || "Your song";
+                }
+                audio.load();
+                $("musicToggle").disabled = false;
+                try {
+                    await audio.play();
+                } catch (error) {
+                    if (error.name === "NotAllowedError") {
+                        $("musicTitle").textContent = "Tap ▶ to start the music";
+                    } else {
+                        console.error("Could not start the background music:", error);
+                        $("musicTitle").textContent = `Check song file: ${content.musicUrl}`;
+                    }
+                }
+            } catch (error) {
+                console.error("Could not load the background music:", error);
+                $("musicTitle").textContent = "Couldn't load the song";
+            }
+        }
+
+        async function renderCard() {
+            const card = content.cards[activeCard];
+            $("letterCard").style.animation = "none";
+            void $("letterCard").offsetWidth;
+            $("letterCard").style.animation = "";
+            $("cardCount").textContent = `A little love letter · ${String(activeCard + 1).padStart(2, "0")}`;
+            $("cardTitle").textContent = card.title;
+            $("cardText").textContent = card.text;
+            $("imageCaption").textContent = card.caption;
+            $("signature").textContent = content.signoff;
+            $("cardImage").alt = card.alt;
+            $("counter").textContent = `${activeCard + 1} / ${content.cards.length}`;
+            $("editingCardNumber").textContent = String(activeCard + 1);
+            $("totalCards").textContent = String(content.cards.length);
+            $("dots").replaceChildren(...content.cards.map((_, index) => {
+                const dot = document.createElement("button");
+                dot.type = "button";
+                dot.className = "dot";
+                dot.setAttribute("aria-label", `Show letter ${index + 1}`);
+                dot.setAttribute("aria-current", String(index === activeCard));
+                dot.addEventListener("click", () => { activeCard = index; renderCard(); });
+                return dot;
+            }));
+            $("cardImage").src = card.image;
+            try {
+                const savedPhoto = await readPhoto(activeCard);
+                if (savedPhoto && activeCard === content.cards.indexOf(card)) {
+                    $("cardImage").src = URL.createObjectURL(savedPhoto);
+                }
+            } catch (error) {
+                console.error("Could not load the saved photo:", error);
+            }
+        }
+
+        function renderPage() {
+            $("brandText").textContent = `our little love story`;
+            $("dateLine").textContent = `A little celebration of our 23rd monthsarry`;
+            const title = content.title;
+            const lastSpace = title.lastIndexOf(" ");
+            $("pageTitle").replaceChildren(document.createTextNode(lastSpace > 0 ? `${title.slice(0, lastSpace)} ` : ""));
+            const highlight = document.createElement("span");
+            highlight.textContent = lastSpace > 0 ? title.slice(lastSpace + 1) : title;
+            $("pageTitle").append(highlight);
+            $("pageSubtitle").textContent = content.subtitle;
+            $("footerName").textContent = content.name || "my favorite person";
+            document.documentElement.style.setProperty("--paper", themes[content.theme].paper);
+            document.documentElement.style.setProperty("--ink", themes[content.theme].ink);
+            document.documentElement.style.setProperty("--muted", themes[content.theme].muted);
+            document.documentElement.style.setProperty("--rose", themes[content.theme].rose);
+            document.documentElement.style.setProperty("--rose-dark", themes[content.theme].roseDark);
+            document.documentElement.style.setProperty("--blush", themes[content.theme].blush);
+            document.documentElement.style.setProperty("--line", themes[content.theme].line);
+            renderCard();
+            loadBackgroundMusic();
+        }
+
+        function moveCard(direction) {
+            activeCard = (activeCard + direction + content.cards.length) % content.cards.length;
+            renderCard();
+        }
+
+        function populateEditor() {
+            $("editTitle").value = content.title;
+            $("editSubtitle").value = content.subtitle;
+            $("editName").value = content.name;
+            $("editDate").value = content.date;
+            $("editSignoff").value = content.signoff;
+            $("editTheme").value = content.theme;
+            $("editCardTitle").value = content.cards[activeCard].title;
+            $("editCardText").value = content.cards[activeCard].text;
+            $("editCaption").value = content.cards[activeCard].caption;
+            $("editPhoto").value = "";
+            $("editMusic").value = "";
+            pendingPhoto = null;
+            pendingMusic = null;
+            removeSavedMusic = false;
+            $("editorStatus").textContent = "";
+            $("editingCardNumber").textContent = String(activeCard + 1);
+        }
+
+        function closeEditor() {
+            $("editorDialog").close();
+            pendingPhoto = null;
+        }
+
+        $("previous").addEventListener("click", () => moveCard(-1));
+        $("next").addEventListener("click", () => moveCard(1));
+        document.addEventListener("keydown", (event) => {
+            if ($("editorDialog").open) return;
+            if (event.key === "ArrowLeft") moveCard(-1);
+            if (event.key === "ArrowRight") moveCard(1);
+        });
+
+        let touchStartX = null;
+        $("letterCard").addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+        $("letterCard").addEventListener("touchend", (event) => {
+            if (touchStartX === null) return;
+            const distance = event.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(distance) > 45) moveCard(distance < 0 ? 1 : -1);
+            touchStartX = null;
+        }, { passive: true });
+        $("letterCard").addEventListener("pointerdown", (event) => {
+            if (event.pointerType === "mouse") touchStartX = event.clientX;
+        });
+        $("letterCard").addEventListener("pointerup", (event) => {
+            if (event.pointerType !== "mouse" || touchStartX === null) return;
+            const distance = event.clientX - touchStartX;
+            if (Math.abs(distance) > 65) moveCard(distance < 0 ? 1 : -1);
+            touchStartX = null;
+        });
+
+        $("openEditor").disabled = !editorEnabled;
+        if (editorEnabled) {
+            $("openEditor").addEventListener("click", () => {
+                populateEditor();
+                $("editorDialog").showModal();
+            });
+        } else {
+            $("openEditor").title = "Page editing is currently disabled.";
+        }
+        $("closeEditor").addEventListener("click", closeEditor);
+        $("cancelEditor").addEventListener("click", closeEditor);
+        $("editorDialog").addEventListener("click", (event) => {
+            if (event.target === $("editorDialog")) closeEditor();
+        });
+        $("editPhoto").addEventListener("change", () => {
+            const file = $("editPhoto").files[0];
+            if (!file) { pendingPhoto = null; return; }
+            if (!file.type.startsWith("image/")) {
+                $("editorStatus").textContent = "Please choose an image file.";
+                $("editPhoto").value = "";
+                pendingPhoto = null;
+                return;
+            }
+            pendingPhoto = file;
+            $("editorStatus").textContent = `${file.name} is ready. Save your changes to use it.`;
+        });
+        $("editMusic").addEventListener("change", () => {
+            const file = $("editMusic").files[0];
+            if (!file) { pendingMusic = null; return; }
+            if (!file.type.startsWith("audio/") && !/\.(mp3|m4a|ogg|wav)$/i.test(file.name)) {
+                $("editorStatus").textContent = "Please choose an audio file.";
+                $("editMusic").value = "";
+                pendingMusic = null;
+                return;
+            }
+            pendingMusic = file;
+            removeSavedMusic = false;
+            $("editorStatus").textContent = `${file.name} is ready. Save your changes to use it.`;
+        });
+        $("removeMusic").addEventListener("click", () => {
+            pendingMusic = null;
+            removeSavedMusic = true;
+            $("editMusic").value = "";
+            $("editorStatus").textContent = "Background music will be removed when you save.";
+        });
+        $("editorForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            $("editorStatus").textContent = "Saving your changes…";
+            const previousContent = content;
+            const updated = {
+                title: $("editTitle").value.trim(),
+                subtitle: $("editSubtitle").value.trim(),
+                name: $("editName").value.trim(),
+                date: $("editDate").value.trim(),
+                signoff: $("editSignoff").value.trim(),
+                theme: $("editTheme").value,
+                musicUrl: content.musicUrl || "",
+                musicTitle: content.musicTitle || "",
+                cards: content.cards.map((card, index) => index === activeCard ? {
+                    ...card,
+                    title: $("editCardTitle").value.trim(),
+                    text: $("editCardText").value.trim(),
+                    caption: $("editCaption").value.trim()
+                } : card)
+            };
+            try {
+                if (pendingPhoto) {
+                    updated.cards[activeCard].alt = pendingPhoto.name.replace(/\.[^.]+$/, "");
+                    await writePhoto(activeCard, pendingPhoto);
+                }
+                if (pendingMusic) {
+                    await writeMusic(pendingMusic);
+                    updated.musicUrl = "";
+                    updated.musicTitle = pendingMusic.name;
+                } else if (removeSavedMusic) {
+                    await deleteMusic();
+                    updated.musicUrl = "";
+                    updated.musicTitle = "";
+                }
+                localStorage.setItem(storageKey, JSON.stringify(updated));
+                content = updated;
+                renderPage();
+                $("editorStatus").textContent = "Your love story is saved on this device ♡";
+                pendingPhoto = null;
+                pendingMusic = null;
+                removeSavedMusic = false;
+                window.setTimeout(closeEditor, 650);
+            } catch (error) {
+                content = previousContent;
+                console.error("Could not save your monthsary page:", error);
+                $("editorStatus").textContent = `Couldn't save your changes: ${error.message}`;
+            }
+        });
+        $("resetPage").addEventListener("click", async () => {
+            if (!window.confirm("Restore the original letters and clear your saved photos and music?")) return;
+            $("editorStatus").textContent = "Restoring the original page…";
+            try {
+                await clearPhotos();
+                await deleteMusic();
+                localStorage.removeItem(storageKey);
+                content = structuredClone(defaultContent);
+                activeCard = 0;
+                renderPage();
+                populateEditor();
+                $("editorStatus").textContent = "The original page has been restored.";
+            } catch (error) {
+                console.error("Could not restore the original page:", error);
+                $("editorStatus").textContent = `Couldn't restore the original page: ${error.message}`;
+            }
+        });
+
+        $("musicToggle").addEventListener("click", async () => {
+            const audio = $("backgroundMusic");
+            if (audio.paused) {
+                try {
+                    await audio.play();
+                } catch (error) {
+                    console.error("Could not play the background music:", error);
+                    $("musicTitle").textContent = "Tap play again to start the song";
+                }
+            } else {
+                audio.pause();
+            }
+        });
+        $("backgroundMusic").addEventListener("play", () => {
+            $("musicToggle").textContent = "Ⅱ";
+            $("musicToggle").setAttribute("aria-label", "Pause background music");
+        });
+        $("backgroundMusic").addEventListener("pause", () => {
+            $("musicToggle").textContent = "▶";
+            $("musicToggle").setAttribute("aria-label", "Play background music");
+        });
+        $("backgroundMusic").addEventListener("error", () => {
+            $("musicToggle").disabled = true;
+            $("musicTitle").textContent = `Check song file: ${content.musicUrl}`;
+        });
+
+        $("openCover").addEventListener("click", async () => {
+            const audio = $("backgroundMusic");
+            $("cover").classList.add("is-open");
+            if (audio.src && audio.paused) {
+                try { await audio.play(); } catch (error) { console.error("Could not start the music:", error); }
+            }
+        });
+
+        renderPage();
+    </script>
+</body>
+
+</html>
