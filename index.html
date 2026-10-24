@@ -927,7 +927,7 @@
                     text: " Hi gurl , bi , broo, happy birthday to you i just want to thank you for all of ur efforts and sacrifices for me and i’m very thankful to have you. Today is a very special day because it marks another beautiful chapter of your life, and I’m so happy that I get to be part of it.",
                     caption: "One of my favorite little moments",
                     image: "media/slide1.jpg",
-                    alt: "A couple sharing a warm, happy moment"
+                    alt: "A Thousand Reasons I’m Grateful for You"
                 },
                 {
                     title: "My Girl",
@@ -947,6 +947,9 @@
         };
 
         const storageKey = "monthsary-page-v1";
+        // Bump this when default card copy changes to refresh previously saved card text.
+        const cardContentVersion = "2";
+        const cardContentVersionKey = `${storageKey}-card-content-version`;
         const themes = {
             rose: { rose: "#cf7181", roseDark: "#a94f64", blush: "#f8e5e4", paper: "#fffaf5", ink: "#593c40", muted: "#98777a", line: "#eedbd6" },
             peach: { rose: "#d78768", roseDark: "#a95f48", blush: "#fae8d9", paper: "#fffaf3", ink: "#59423a", muted: "#967a6d", line: "#efddcd" },
@@ -968,18 +971,29 @@
         function loadContent() {
             try {
                 const saved = localStorage.getItem(storageKey);
-                if (!saved) return structuredClone(defaultContent);
+                if (!saved) {
+                    localStorage.setItem(cardContentVersionKey, cardContentVersion);
+                    return structuredClone(defaultContent);
+                }
                 const parsed = JSON.parse(saved);
                 if (!parsed || !Array.isArray(parsed.cards) || parsed.cards.length !== defaultContent.cards.length) {
                     throw new Error("Saved page data is not in the expected format.");
                 }
-                return {
+                const hasCurrentCardContent = localStorage.getItem(cardContentVersionKey) === cardContentVersion;
+                const loadedContent = {
                     ...structuredClone(defaultContent),
                     ...parsed,
                     musicUrl: parsed.musicTitle ? (parsed.musicUrl || "") : (defaultContent.musicUrl || parsed.musicUrl || ""),
                     musicTitle: parsed.musicTitle || defaultContent.musicTitle || "",
-                    cards: parsed.cards.map((card, index) => ({ ...defaultContent.cards[index], ...card }))
+                    cards: hasCurrentCardContent
+                        ? parsed.cards.map((card, index) => ({ ...defaultContent.cards[index], ...card }))
+                        : structuredClone(defaultContent.cards)
                 };
+                if (!hasCurrentCardContent) {
+                    localStorage.setItem(storageKey, JSON.stringify(loadedContent));
+                    localStorage.setItem(cardContentVersionKey, cardContentVersion);
+                }
+                return loadedContent;
             } catch (error) {
                 console.error("Could not load your saved monthsary page:", error);
                 return structuredClone(defaultContent);
