@@ -4,20 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#fff8f2">
+    <meta name="theme-color" content="#fcfaff">
     <meta name="description" content="A little love-letter scrapbook made just for us.">
     <title>23 Months of Us ♡</title>
     <style>
         :root {
             color-scheme: light;
-            --paper: #fffaf5;
-            --ink: #593c40;
-            --muted: #98777a;
-            --rose: #cf7181;
-            --rose-dark: #a94f64;
-            --blush: #f8e5e4;
-            --line: #eedbd6;
-            --shadow: 0 24px 70px rgb(109 62 67 / 12%);
+            --paper: #fcfaff;
+            --ink: #493d58;
+            --muted: #857896;
+            --rose: #9b83be;
+            --rose-dark: #735d98;
+            --blush: #eee8f6;
+            --line: #e5dced;
+            --shadow: 0 24px 70px rgb(73 61 88 / 12%);
             font-family: "Segoe UI", "Avenir Next", Avenir, sans-serif;
         }
 
@@ -32,8 +32,8 @@
             overflow-x: hidden;
             color: var(--ink);
             background:
-                radial-gradient(ellipse at 10% 16%, rgb(255 225 222 / 67%), transparent 30rem),
-                radial-gradient(ellipse at 92% 78%, rgb(255 235 208 / 58%), transparent 28rem),
+                radial-gradient(ellipse at 10% 16%, rgb(238 232 246 / 75%), transparent 30rem),
+                radial-gradient(ellipse at 92% 78%, rgb(229 220 237 / 58%), transparent 28rem),
                 var(--paper);
         }
 
@@ -143,9 +143,9 @@
             grid-template-columns: .92fr 1.08fr;
             min-height: 438px;
             overflow: hidden;
-            border: 1px solid rgb(238 219 214 / 85%);
+            border: 1px solid var(--line);
             border-radius: 12px;
-            background: #fffdfb;
+            background: var(--paper);
             box-shadow: var(--shadow);
             animation: card-in .38s ease both;
         }
@@ -178,7 +178,7 @@
             height: 19px;
             content: "";
             transform: translateX(-50%) rotate(-3deg);
-            background: rgb(255 252 230 / 82%);
+            background: rgb(238 232 246 / 82%);
         }
 
         .photo-frame img {
@@ -229,7 +229,7 @@
 
         .letter-text {
             margin: 0;
-            color: #795d60;
+            color: var(--ink);
             font-family: Georgia, serif;
             font-size: 16px;
             line-height: 1.85;
@@ -259,7 +259,7 @@
             place-items: center;
             border: 1px solid var(--line);
             border-radius: 50%;
-            background: #fffdfb;
+            background: var(--paper);
             cursor: pointer;
             font-size: 21px;
             transition: transform .2s, background .2s;
@@ -283,7 +283,7 @@
             padding: 0;
             border: 0;
             border-radius: 999px;
-            background: #e5ceca;
+            background: var(--line);
             cursor: pointer;
             transition: width .2s, background .2s;
         }
@@ -303,7 +303,7 @@
 
         .hint {
             margin: 15px 0 0;
-            color: #a18485;
+            color: var(--muted);
             font-size: 12px;
             text-align: center;
         }
@@ -387,7 +387,7 @@
         .floating-heart {
             position: fixed;
             z-index: -1;
-            color: rgb(207 113 129 / 15%);
+            color: rgb(155 131 190 / 20%);
             font-size: 30px;
             animation: float 7s ease-in-out infinite;
             pointer-events: none;
@@ -419,12 +419,12 @@
             border: 1px solid var(--line);
             border-radius: 17px;
             color: var(--ink);
-            background: #fffdfb;
+            background: var(--paper);
             box-shadow: 0 25px 90px rgb(68 34 41 / 27%);
         }
 
         dialog::backdrop {
-            background: rgb(63 37 42 / 40%);
+            background: rgb(73 61 88 / 40%);
             backdrop-filter: blur(4px);
         }
 
@@ -482,7 +482,7 @@
         }
 
         .field label {
-            color: #795d60;
+            color: var(--ink);
             font-size: 12px;
             font-weight: 650;
         }
@@ -503,7 +503,7 @@
         .field textarea:focus,
         .field select:focus {
             border-color: var(--rose);
-            box-shadow: 0 0 0 3px rgb(207 113 129 / 12%);
+            box-shadow: 0 0 0 3px rgb(155 131 190 / 16%);
         }
 
         .field textarea {
@@ -550,7 +550,7 @@
             margin-left: auto;
             padding: 8px;
             border: 0;
-            color: #9a6d72;
+            color: var(--rose-dark);
             background: transparent;
             cursor: pointer;
             text-decoration: underline;
@@ -692,8 +692,8 @@
             padding: 24px;
             text-align: center;
             background:
-                radial-gradient(ellipse at 15% 20%, rgb(255 225 222 / 80%), transparent 30rem),
-                radial-gradient(ellipse at 85% 80%, rgb(255 235 208 / 70%), transparent 28rem),
+                radial-gradient(ellipse at 15% 20%, rgb(238 232 246 / 85%), transparent 30rem),
+                radial-gradient(ellipse at 85% 80%, rgb(229 220 237 / 70%), transparent 28rem),
                 var(--paper);
             transition: opacity .7s ease, visibility .7s;
         }
@@ -751,7 +751,7 @@
             border-radius: 999px;
             color: #fff;
             background: var(--rose);
-            box-shadow: 0 10px 28px rgb(207 113 129 / 35%);
+            box-shadow: 0 10px 28px rgb(155 131 190 / 35%);
             cursor: pointer;
             font-size: 16px;
             transition: transform .2s, background .2s;
@@ -917,14 +917,14 @@
             name: "my favorite person",
             date: "A little celebration for your 18th birthday",
             signoff: "I love you so much, always",
-            theme: "rose",
+            theme: "lilac",
             // Add your track at this path, or change this to its filename in media/.
             musicUrl: "media/our-song.mp3",
             musicTitle: "Our song",
             cards: [
                 {
                     title: "My first yet the only gift you receive directly form my craft",
-                    text: " for this hehehe.\n\nThank you le things i had made.",
+                    text: " Hi gurl , bi , broo, happy birthday to you. I just want to thank you for all of ur efforts and sacrifices for me and i’m very thankful to have you. Today is a very special day because it marks another beautiful chapter of your life, and I’m so happy that I get to be part of it. Salamat dahil lagi kang nandiyan para sakin kahit alam naman natin na hindi ako perfect na boyfriend para sayoo ayunnn lang thankyouu so muchh gurll happy birthday ulit iloveyouuuu😘\n\nThank you le things i had made.",
                     caption: "One of my favorite little moments",
                     image: "media/slide1.jpg",
                     alt: "A couple sharing a warm, happy moment"
@@ -1140,8 +1140,8 @@
         }
 
         function renderPage() {
-            $("brandText").textContent = `our little love story`;
-            $("dateLine").textContent = `A little celebration of our 23rd monthsarry`;
+            $("brandText").textContent = `To your legallity`;
+            $("dateLine").textContent = `A little celebration of your birthday`;
             const title = content.title;
             const lastSpace = title.lastIndexOf(" ");
             $("pageTitle").replaceChildren(document.createTextNode(lastSpace > 0 ? `${title.slice(0, lastSpace)} ` : ""));
