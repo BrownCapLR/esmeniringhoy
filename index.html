@@ -73,7 +73,6 @@
             font-size: 23px;
         }
 
-        .customize-button,
         .quiet-button,
         .save-button {
             min-height: 44px;
@@ -85,14 +84,9 @@
             transition: transform .2s, box-shadow .2s, background .2s;
         }
 
-        .customize-button:hover,
         .quiet-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgb(109 62 67 / 10%);
-        }
-
-        .customize-button {
-            color: var(--rose-dark);
         }
 
         .hero {
@@ -578,12 +572,6 @@
                 font-size: 16px;
             }
 
-            .customize-button {
-                min-height: 40px;
-                padding: 0 14px;
-                font-size: 13px;
-            }
-
             .hero {
                 padding: 30px 0 18px;
             }
@@ -781,7 +769,6 @@
         <header class="topbar">
             <div class="brand"><span class="brand-heart" aria-hidden="true">♡</span><span id="brandText">our little long
                     distance love story</span></div>
-            <button class="customize-button" id="openMusicSettings" type="button">&nbsp; 18 na birthday muna </button>
         </header>
 
         <main>
@@ -867,44 +854,12 @@
                     <p class="photo-help">Your chosen photo stays on this device in this browser. For the best result,
                         use a compressed JPG or PNG.</p>
                 </div>
-                <h3 class="section-heading">Background music</h3>
-                <div class="field full"><label for="editMusic">Choose a song (MP3, M4A, OGG, or WAV)</label><input
-                        id="editMusic" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav">
-                    <p class="photo-help">Your chosen song is saved in this browser on this device. To include a song
-                        for everyone on your published site, add it to the site's media folder and set musicUrl in
-                        defaultContent below to its path, such as media/song.mp3.</p>
-                </div>
-                <div class="field full"><button class="quiet-button" id="removeMusic" type="button">Remove saved
-                        background music</button></div>
             </div>
             <div class="editor-actions">
                 <button class="save-button" type="submit">Save my changes</button>
                 <button class="quiet-button" id="cancelEditor" type="button">Cancel</button>
                 <button class="reset-button" id="resetPage" type="button">Restore the original page</button>
                 <p class="status" id="editorStatus" role="status" aria-live="polite"></p>
-            </div>
-        </form>
-    </dialog>
-
-    <dialog id="musicDialog" aria-labelledby="musicDialogTitle">
-        <form class="editor" id="musicForm">
-            <div class="editor-header">
-                <div>
-                    <h2 id="musicDialogTitle">Choose your song</h2>
-                    <p>Pick a song from your device to use as the background music.</p>
-                </div>
-                <button class="close-button" id="closeMusicDialog" type="button" aria-label="Close music settings">×</button>
-            </div>
-            <div class="field full">
-                <label for="musicFile">Background music (MP3, M4A, OGG, or WAV)</label>
-                <input id="musicFile" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav">
-                <p class="photo-help">Your song is saved in this browser on this device.</p>
-            </div>
-            <div class="editor-actions">
-                <button class="save-button" type="submit">Save background music</button>
-                <button class="quiet-button" id="restoreDefaultMusic" type="button">Use the original song</button>
-                <button class="quiet-button" id="cancelMusicDialog" type="button">Cancel</button>
-                <p class="status" id="musicStatus" role="status" aria-live="polite"></p>
             </div>
         </form>
     </dialog>
@@ -918,7 +873,7 @@
             date: "A little celebration for your 18th birthday",
             signoff: "I love you so much, always",
             theme: "lilac",
-            // Add your track at this path, or change this to its filename in media/.
+            // Replace this file in media/ to change the song; keep the same filename.
             musicUrl: "media/our-song.mp3",
             musicTitle: "Our song",
             cards: [
@@ -962,11 +917,7 @@
         let pendingPhoto = null;
         const photoDatabase = "monthsary-photos-v1";
         const photoStore = "photos";
-        const musicStore = "music";
         const $ = (id) => document.getElementById(id);
-        let pendingMusic = null;
-        let removeSavedMusic = false;
-        let musicObjectUrl = null;
 
         function loadContent() {
             try {
@@ -983,8 +934,8 @@
                 const loadedContent = {
                     ...structuredClone(defaultContent),
                     ...parsed,
-                    musicUrl: parsed.musicTitle ? (parsed.musicUrl || "") : (defaultContent.musicUrl || parsed.musicUrl || ""),
-                    musicTitle: parsed.musicTitle || defaultContent.musicTitle || "",
+                    musicUrl: defaultContent.musicUrl,
+                    musicTitle: defaultContent.musicTitle,
                     cards: hasCurrentCardContent
                         ? parsed.cards.map((card, index) => ({ ...defaultContent.cards[index], ...card }))
                         : structuredClone(defaultContent.cards)
@@ -1010,7 +961,6 @@
                 request.onupgradeneeded = () => {
                     const db = request.result;
                     if (!db.objectStoreNames.contains(photoStore)) db.createObjectStore(photoStore);
-                    if (!db.objectStoreNames.contains(musicStore)) db.createObjectStore(musicStore);
                 };
                 request.onsuccess = () => resolve(request.result);
                 request.onerror = () => reject(request.error || new Error("Could not open photo storage."));
@@ -1047,75 +997,23 @@
             });
         }
 
-        async function readMusic() {
-            const db = await openPhotoDatabase();
-            return new Promise((resolve, reject) => {
-                const request = db.transaction(musicStore, "readonly").objectStore(musicStore).get("background");
-                request.onsuccess = () => { db.close(); resolve(request.result || null); };
-                request.onerror = () => { db.close(); reject(request.error || new Error("Could not load the saved song.")); };
-            });
-        }
-
-        async function writeMusic(file) {
-            const db = await openPhotoDatabase();
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction(musicStore, "readwrite");
-                transaction.objectStore(musicStore).put(file, "background");
-                transaction.oncomplete = () => { db.close(); resolve(); };
-                transaction.onerror = () => { db.close(); reject(transaction.error || new Error("Could not save the song.")); };
-                transaction.onabort = () => { db.close(); reject(transaction.error || new Error("Song saving was interrupted.")); };
-            });
-        }
-
-        async function deleteMusic() {
-            const db = await openPhotoDatabase();
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction(musicStore, "readwrite");
-                transaction.objectStore(musicStore).delete("background");
-                transaction.oncomplete = () => { db.close(); resolve(); };
-                transaction.onerror = () => { db.close(); reject(transaction.error || new Error("Could not remove the saved song.")); };
-            });
-        }
-
         async function loadBackgroundMusic() {
             const audio = $("backgroundMusic");
             audio.pause();
             $("musicToggle").disabled = true;
-            if (musicObjectUrl) {
-                URL.revokeObjectURL(musicObjectUrl);
-                musicObjectUrl = null;
-            }
+            audio.src = defaultContent.musicUrl;
+            $("musicTitle").textContent = defaultContent.musicTitle;
+            audio.load();
+            $("musicToggle").disabled = false;
             try {
-                if (content.musicUrl) {
-                    audio.src = content.musicUrl;
-                    $("musicTitle").textContent = content.musicTitle || content.musicUrl.split("/").pop();
-                } else {
-                    const savedMusic = await readMusic();
-                    if (!savedMusic) {
-                        audio.removeAttribute("src");
-                        audio.load();
-                        $("musicTitle").textContent = "Add a song in “Make it yours”";
-                        return;
-                    }
-                    musicObjectUrl = URL.createObjectURL(savedMusic);
-                    audio.src = musicObjectUrl;
-                    $("musicTitle").textContent = content.musicTitle || savedMusic.name || "Your song";
-                }
-                audio.load();
-                $("musicToggle").disabled = false;
-                try {
-                    await audio.play();
-                } catch (error) {
-                    if (error.name === "NotAllowedError") {
-                        $("musicTitle").textContent = "Tap ▶ to start the music";
-                    } else {
-                        console.error("Could not start the background music:", error);
-                        $("musicTitle").textContent = `Check song file: ${content.musicUrl}`;
-                    }
-                }
+                await audio.play();
             } catch (error) {
-                console.error("Could not load the background music:", error);
-                $("musicTitle").textContent = "Couldn't load the song";
+                if (error.name === "NotAllowedError") {
+                    $("musicTitle").textContent = "Tap ▶ to start the music";
+                } else {
+                    console.error("Could not start the background music:", error);
+                    $("musicTitle").textContent = `Check song file: ${defaultContent.musicUrl}`;
+                }
             }
         }
 
@@ -1191,10 +1089,7 @@
             $("editCardText").value = content.cards[activeCard].text;
             $("editCaption").value = content.cards[activeCard].caption;
             $("editPhoto").value = "";
-            $("editMusic").value = "";
             pendingPhoto = null;
-            pendingMusic = null;
-            removeSavedMusic = false;
             $("editorStatus").textContent = "";
             $("editingCardNumber").textContent = String(activeCard + 1);
         }
@@ -1230,61 +1125,6 @@
             touchStartX = null;
         });
 
-        $("openMusicSettings").addEventListener("click", () => {
-            $("musicFile").value = "";
-            $("musicStatus").textContent = "";
-            $("musicDialog").showModal();
-        });
-        $("closeMusicDialog").addEventListener("click", () => $("musicDialog").close());
-        $("cancelMusicDialog").addEventListener("click", () => $("musicDialog").close());
-        $("musicDialog").addEventListener("click", (event) => {
-            if (event.target === $("musicDialog")) $("musicDialog").close();
-        });
-        $("musicForm").addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const file = $("musicFile").files[0];
-            if (!file) {
-                $("musicStatus").textContent = "Choose an audio file first.";
-                return;
-            }
-            if (!file.type.startsWith("audio/") && !/\.(mp3|m4a|ogg|wav)$/i.test(file.name)) {
-                $("musicStatus").textContent = "Please choose an audio file.";
-                $("musicFile").value = "";
-                return;
-            }
-            $("musicStatus").textContent = "Saving your song…";
-            try {
-                await writeMusic(file);
-                const updated = { ...content, musicUrl: "", musicTitle: file.name };
-                localStorage.setItem(storageKey, JSON.stringify(updated));
-                content = updated;
-                renderPage();
-                $("musicStatus").textContent = "Your background music is saved on this device ♡";
-                window.setTimeout(() => $("musicDialog").close(), 650);
-            } catch (error) {
-                console.error("Could not save the background music:", error);
-                $("musicStatus").textContent = `Couldn't save your song: ${error.message}`;
-            }
-        });
-        $("restoreDefaultMusic").addEventListener("click", async () => {
-            $("musicStatus").textContent = "Restoring the original song…";
-            try {
-                await deleteMusic();
-                const updated = {
-                    ...content,
-                    musicUrl: defaultContent.musicUrl,
-                    musicTitle: defaultContent.musicTitle
-                };
-                localStorage.setItem(storageKey, JSON.stringify(updated));
-                content = updated;
-                renderPage();
-                $("musicStatus").textContent = "The original song is restored.";
-            } catch (error) {
-                console.error("Could not restore the original background music:", error);
-                $("musicStatus").textContent = `Couldn't restore the original song: ${error.message}`;
-            }
-        });
-
         $("closeEditor").addEventListener("click", closeEditor);
         $("cancelEditor").addEventListener("click", closeEditor);
         $("editorDialog").addEventListener("click", (event) => {
@@ -1302,25 +1142,6 @@
             pendingPhoto = file;
             $("editorStatus").textContent = `${file.name} is ready. Save your changes to use it.`;
         });
-        $("editMusic").addEventListener("change", () => {
-            const file = $("editMusic").files[0];
-            if (!file) { pendingMusic = null; return; }
-            if (!file.type.startsWith("audio/") && !/\.(mp3|m4a|ogg|wav)$/i.test(file.name)) {
-                $("editorStatus").textContent = "Please choose an audio file.";
-                $("editMusic").value = "";
-                pendingMusic = null;
-                return;
-            }
-            pendingMusic = file;
-            removeSavedMusic = false;
-            $("editorStatus").textContent = `${file.name} is ready. Save your changes to use it.`;
-        });
-        $("removeMusic").addEventListener("click", () => {
-            pendingMusic = null;
-            removeSavedMusic = true;
-            $("editMusic").value = "";
-            $("editorStatus").textContent = "Background music will be removed when you save.";
-        });
         $("editorForm").addEventListener("submit", async (event) => {
             event.preventDefault();
             $("editorStatus").textContent = "Saving your changes…";
@@ -1332,8 +1153,6 @@
                 date: $("editDate").value.trim(),
                 signoff: $("editSignoff").value.trim(),
                 theme: $("editTheme").value,
-                musicUrl: content.musicUrl || "",
-                musicTitle: content.musicTitle || "",
                 cards: content.cards.map((card, index) => index === activeCard ? {
                     ...card,
                     title: $("editCardTitle").value.trim(),
@@ -1346,22 +1165,11 @@
                     updated.cards[activeCard].alt = pendingPhoto.name.replace(/\.[^.]+$/, "");
                     await writePhoto(activeCard, pendingPhoto);
                 }
-                if (pendingMusic) {
-                    await writeMusic(pendingMusic);
-                    updated.musicUrl = "";
-                    updated.musicTitle = pendingMusic.name;
-                } else if (removeSavedMusic) {
-                    await deleteMusic();
-                    updated.musicUrl = "";
-                    updated.musicTitle = "";
-                }
                 localStorage.setItem(storageKey, JSON.stringify(updated));
                 content = updated;
                 renderPage();
                 $("editorStatus").textContent = "Your love story is saved on this device ♡";
                 pendingPhoto = null;
-                pendingMusic = null;
-                removeSavedMusic = false;
                 window.setTimeout(closeEditor, 650);
             } catch (error) {
                 content = previousContent;
@@ -1370,11 +1178,10 @@
             }
         });
         $("resetPage").addEventListener("click", async () => {
-            if (!window.confirm("Restore the original letters and clear your saved photos and music?")) return;
+            if (!window.confirm("Restore the original letters and clear your saved photos?")) return;
             $("editorStatus").textContent = "Restoring the original page…";
             try {
                 await clearPhotos();
-                await deleteMusic();
                 localStorage.removeItem(storageKey);
                 content = structuredClone(defaultContent);
                 activeCard = 0;
@@ -1410,7 +1217,7 @@
         });
         $("backgroundMusic").addEventListener("error", () => {
             $("musicToggle").disabled = true;
-            $("musicTitle").textContent = `Check song file: ${content.musicUrl}`;
+            $("musicTitle").textContent = `Check song file: ${defaultContent.musicUrl}`;
         });
 
         $("openCover").addEventListener("click", async () => {
